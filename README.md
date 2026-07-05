@@ -1,2 +1,2 @@
 # Projects-2026-
-Projects I made for fun
+Check out merit order model, I made it to evaluate how the National Grid dispatch generations. 
