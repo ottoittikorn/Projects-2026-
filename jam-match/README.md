@@ -4,7 +4,7 @@ An app that helps musicians find people nearby to jam with or form a band,
 matched by instrument, level, genre, favourite artists and distance.
 
 Built with [Expo](https://expo.dev) (React Native), so one codebase runs on iPhone and Android.
-See [V1_PLAN.md](V1_PLAN.md) for what's in the first version.
+See [V1_PLAN.md](V1_PLAN.md) for what's in the first version and [ROADMAP.md](ROADMAP.md) for the build steps.
 
 ## Step 1: run the app on your phone
 
