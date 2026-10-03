@@ -1,4 +1,4 @@
-// A card you can swipe like Tinder: right = "Let's jam", left = "Pass".
+// A card you can swipe like Tinder: right = "Yeah!" (let's jam), left = "Nah" (pass).
 // The buttons below the card call `swipe('right' | 'left')` to fly it off the same way.
 
 import { forwardRef, useImperativeHandle, useRef } from 'react';
@@ -56,8 +56,8 @@ const SwipeCard = forwardRef(function SwipeCard({ children, onSwipe }, ref) {
       {...responder.panHandlers}
     >
       {children}
-      <Animated.Text style={[styles.stamp, styles.jam, { opacity: jamOpacity }]}>JAM</Animated.Text>
-      <Animated.Text style={[styles.stamp, styles.pass, { opacity: passOpacity }]}>PASS</Animated.Text>
+      <Animated.Text style={[styles.stamp, styles.jam, { opacity: jamOpacity }]}>Yeah!</Animated.Text>
+      <Animated.Text style={[styles.stamp, styles.pass, { opacity: passOpacity }]}>Nah</Animated.Text>
     </Animated.View>
   );
 });
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     top: 28,
     fontSize: 34,
     fontWeight: '900',
-    letterSpacing: 2,
+    letterSpacing: 1,
     paddingHorizontal: 12,
     paddingVertical: 2,
     borderWidth: 4,

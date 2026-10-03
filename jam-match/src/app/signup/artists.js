@@ -34,8 +34,13 @@ export default function Artists() {
 
   const finish = () => {
     updateProfile({ topArtists: artists });
-    if (edit) router.back();
-    else router.replace('/discover');
+    if (edit) {
+      router.back();
+      return;
+    }
+    // Clear the sign-up screens from history, so there's nothing to go "back" to from Discover.
+    if (router.canDismiss()) router.dismissAll();
+    router.replace('/discover');
   };
 
   return (

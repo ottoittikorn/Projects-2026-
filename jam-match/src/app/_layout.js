@@ -16,6 +16,8 @@ export default function RootLayout() {
           contentStyle: { backgroundColor: colors.background },
         }}
       >
+        {/* No swipe-back on the main tabs: swiping right on a card must never leave Discover. */}
+        <Stack.Screen name="(tabs)" options={{ gestureEnabled: false }} />
         <Stack.Screen
           name="chat/[id]"
           options={{
