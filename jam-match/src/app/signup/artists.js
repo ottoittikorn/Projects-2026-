@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   connectRow: { flexDirection: 'row', gap: space.sm },
   flex: { flex: 1 },
   artist: { flexDirection: 'row', alignItems: 'center', gap: space.md },
-  rank: { width: 18, fontSize: 16, fontWeight: '800', color: colors.warm },
+  rank: { width: 18, fontSize: 16, fontWeight: '800', color: colors.highlight },
   remove: { fontSize: 13, color: colors.muted },
   addRow: { flexDirection: 'row', gap: space.sm },
   input: {

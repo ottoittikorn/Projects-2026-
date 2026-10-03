@@ -8,7 +8,7 @@ import { Avatar, Button, Screen, Section, Segmented, text } from '../../componen
 import { PEOPLE } from '../../data/people';
 import { rankPeople } from '../../lib/matching';
 import { useApp } from '../../state/AppContext';
-import { colors, radius, space } from '../../theme';
+import { colors, fonts, radius, space } from '../../theme';
 
 const MODES = [
   { id: 'duo', label: 'Duo' },
@@ -98,11 +98,12 @@ export default function Discover() {
             <View style={styles.matchBox}>
               <Text style={[text.kicker, styles.matchKicker]}>It’s a match</Text>
               <View style={styles.avatars}>
-                <Avatar name={me.name || 'You'} size={72} />
-                <Avatar name={matchedWith.name} size={72} />
+                <Avatar name={me.name || 'You'} size={72} inverse />
+                <Avatar name={matchedWith.name} size={72} inverse />
               </View>
               <Text style={styles.matchTitle}>You and {matchedWith.name} both want to jam</Text>
               <Button
+                variant="inverse"
                 title={`Say hi to ${matchedWith.name}`}
                 onPress={() => {
                   const id = matchedWith.id;
@@ -110,7 +111,7 @@ export default function Discover() {
                   router.push(`/chat/${id}`);
                 }}
               />
-              <Button title="Keep looking" variant="secondary" onPress={() => setMatchedWith(null)} />
+              <Button title="Keep looking" variant="outlineLight" onPress={() => setMatchedWith(null)} />
             </View>
           </View>
         ) : null}
@@ -127,17 +128,24 @@ const styles = StyleSheet.create({
   flex2: { flex: 2 },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(28, 26, 23, 0.7)',
+    backgroundColor: 'rgba(11, 11, 15, 0.75)',
     justifyContent: 'center',
     padding: space.xl,
   },
   matchBox: {
-    backgroundColor: colors.background,
+    backgroundColor: colors.blue,
     borderRadius: radius.lg + 6,
     padding: space.xl,
     gap: space.md,
   },
-  matchKicker: { color: colors.warm, textAlign: 'center' },
+  matchKicker: { color: colors.white, textAlign: 'center' },
   avatars: { flexDirection: 'row', justifyContent: 'center', gap: space.md },
-  matchTitle: { fontSize: 24, fontWeight: '800', color: colors.ink, textAlign: 'center' },
+  matchTitle: {
+    fontFamily: fonts.display,
+    fontSize: 24,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    color: colors.white,
+    textAlign: 'center',
+  },
 });

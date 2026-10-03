@@ -2,7 +2,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { LEVELS } from '../data/options';
 import { sharedArtists } from '../lib/matching';
-import { colors, radius, space } from '../theme';
+import { colors, fonts, radius, space } from '../theme';
 import { Avatar, Chip, ChipRow, text } from './ui';
 
 // One musician's card on the Discover screen.
@@ -13,7 +13,7 @@ export default function PersonCard({ person, me }) {
   return (
     <View style={styles.card}>
       <View style={styles.photo}>
-        <Avatar name={person.name} size={96} />
+        <Avatar name={person.name} size={96} inverse />
         <View style={styles.badges}>
           {person.newInTown ? <Text style={styles.badgeWarm}>New in town</Text> : null}
           {person.happyToTeach ? <Text style={styles.badge}>Happy to teach</Text> : null}
@@ -76,14 +76,14 @@ const styles = StyleSheet.create({
   },
   photo: {
     height: 160,
-    backgroundColor: colors.ink,
+    backgroundColor: colors.blue,
     alignItems: 'center',
     justifyContent: 'center',
   },
   badges: { position: 'absolute', top: space.md, left: space.md, flexDirection: 'row', gap: space.sm },
   badge: {
-    backgroundColor: colors.background,
-    color: colors.accent,
+    backgroundColor: colors.ink,
+    color: colors.white,
     fontWeight: '700',
     fontSize: 13,
     paddingVertical: 5,
@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   badgeWarm: {
-    backgroundColor: colors.warm,
-    color: colors.white,
+    backgroundColor: colors.white,
+    color: colors.blue,
     fontWeight: '700',
     fontSize: 13,
     paddingVertical: 5,
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   scroll: { flex: 1 },
   info: { padding: space.lg, gap: space.md },
   nameRow: { gap: 2 },
-  name: { fontSize: 26, fontWeight: '800', color: colors.ink },
+  name: { fontFamily: fonts.display, fontSize: 26, fontWeight: '700', color: colors.ink },
   block: { gap: space.sm },
   instrument: { flexDirection: 'row', justifyContent: 'space-between' },
   level: { fontSize: 14, fontWeight: '700', color: colors.accent },

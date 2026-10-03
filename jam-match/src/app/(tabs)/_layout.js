@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router/js-tabs';
 
-import { colors } from '../../theme';
+import { colors, fonts } from '../../theme';
 
 // The three tabs at the bottom once you're signed up.
 export default function TabsLayout() {
@@ -8,11 +8,17 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.accent,
-        tabBarInactiveTintColor: colors.muted,
-        tabBarStyle: { backgroundColor: colors.card, borderTopColor: colors.line },
+        tabBarActiveTintColor: colors.white,
+        tabBarInactiveTintColor: 'rgba(255, 255, 255, 0.6)',
+        tabBarStyle: { backgroundColor: colors.blue, borderTopColor: colors.blue },
         tabBarIconStyle: { display: 'none' },
-        tabBarLabelStyle: { fontSize: 15, fontWeight: '700' },
+        tabBarLabelStyle: {
+          fontFamily: fonts.display,
+          fontSize: 14,
+          fontWeight: '700',
+          textTransform: 'uppercase',
+          letterSpacing: 1.5,
+        },
         tabBarItemStyle: { justifyContent: 'center' },
       }}
     >

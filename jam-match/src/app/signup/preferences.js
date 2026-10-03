@@ -39,7 +39,7 @@ export default function Preferences() {
 
   return (
     <Screen
-      footer={<Button title={edit ? 'Save' : 'Next: favourite musicians'} onPress={next} />}
+      footer={<Button title={edit ? 'Save' : 'Next'} onPress={next} />}
     >
       <StepHeader step={2} total={3} title="Who do you want to play with?" />
 

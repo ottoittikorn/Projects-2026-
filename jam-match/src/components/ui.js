@@ -3,14 +3,16 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { colors, radius, space } from '../theme';
+import { colors, fonts, radius, space } from '../theme';
 
 // A screen with the app background, safe-area padding, scrolling content
 // and an optional footer (usually the main button) pinned to the bottom.
-export function Screen({ children, footer, scroll = true, edges = ['top', 'bottom'] }) {
+// `tone="blue"` gives a full brand-blue screen (used on the welcome screen).
+export function Screen({ children, footer, scroll = true, edges = ['top', 'bottom'], tone }) {
   const Body = scroll ? ScrollView : View;
+  const blue = tone === 'blue';
   return (
-    <SafeAreaView style={styles.screen} edges={edges}>
+    <SafeAreaView style={[styles.screen, blue && styles.screenBlue]} edges={edges}>
       <Body
         style={styles.body}
         contentContainerStyle={scroll ? styles.content : undefined}
@@ -18,13 +20,17 @@ export function Screen({ children, footer, scroll = true, edges = ['top', 'botto
       >
         {scroll ? children : <View style={[styles.content, styles.fill]}>{children}</View>}
       </Body>
-      {footer ? <View style={styles.footer}>{footer}</View> : null}
+      {footer ? <View style={[styles.footer, blue && styles.screenBlue]}>{footer}</View> : null}
     </SafeAreaView>
   );
 }
 
+// Variants: 'primary' (blue), 'secondary' (outlined), and for blue backgrounds
+// 'inverse' (white) and 'outlineLight' (white outline).
 export function Button({ title, onPress, variant = 'primary', disabled = false }) {
   const secondary = variant === 'secondary';
+  const inverse = variant === 'inverse';
+  const outlineLight = variant === 'outlineLight';
   return (
     <Pressable
       onPress={onPress}
@@ -33,11 +39,21 @@ export function Button({ title, onPress, variant = 'primary', disabled = false }
       style={({ pressed }) => [
         styles.button,
         secondary && styles.buttonSecondary,
+        inverse && styles.buttonInverse,
+        outlineLight && styles.buttonOutlineLight,
         disabled && styles.buttonDisabled,
         pressed && styles.pressed,
       ]}
     >
-      <Text style={[styles.buttonText, secondary && styles.buttonTextSecondary]}>{title}</Text>
+      <Text
+        style={[
+          styles.buttonText,
+          secondary && styles.buttonTextSecondary,
+          inverse && styles.buttonTextInverse,
+        ]}
+      >
+        {title}
+      </Text>
     </Pressable>
   );
 }
@@ -133,10 +149,13 @@ export function Segmented({ options, value, onChange, small = false }) {
 }
 
 // A coloured circle with someone's first letter, standing in for a photo.
-const avatarColors = ['#0f6e66', '#b4400b', '#5b4b8a', '#2f5d8a', '#8a5a2f', '#3f6b3a'];
+const avatarColors = [colors.blue, colors.ink, '#1f4fb5', '#3a3f4b', colors.blueDark];
 
-export function Avatar({ name, size = 48 }) {
-  const color = avatarColors[(name.charCodeAt(0) || 0) % avatarColors.length];
+// `inverse` = white circle with a blue letter, for use on blue backgrounds.
+export function Avatar({ name, size = 48, inverse = false }) {
+  const color = inverse
+    ? colors.white
+    : avatarColors[(name.charCodeAt(0) || 0) % avatarColors.length];
   return (
     <View
       style={[
@@ -144,28 +163,39 @@ export function Avatar({ name, size = 48 }) {
         { width: size, height: size, borderRadius: size / 2, backgroundColor: color },
       ]}
     >
-      <Text style={[styles.avatarText, { fontSize: size * 0.42 }]}>{name.charAt(0)}</Text>
+      <Text style={[styles.avatarText, inverse && styles.avatarTextInverse, { fontSize: size * 0.42 }]}>
+        {name.charAt(0)}
+      </Text>
     </View>
   );
 }
 
 export const text = StyleSheet.create({
-  title: { fontSize: 28, fontWeight: '800', color: colors.ink },
+  title: {
+    fontFamily: fonts.display,
+    fontSize: 26,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    color: colors.ink,
+  },
   body: { fontSize: 15, lineHeight: 22, color: colors.body },
   small: { fontSize: 13, color: colors.muted },
   label: { fontSize: 14, fontWeight: '700', color: colors.ink },
   kicker: {
+    fontFamily: fonts.display,
     fontSize: 13,
     fontWeight: '700',
-    letterSpacing: 1.2,
+    letterSpacing: 2,
     textTransform: 'uppercase',
     color: colors.accent,
   },
-  error: { fontSize: 13, color: colors.warm, fontWeight: '600' },
+  error: { fontSize: 13, color: colors.error, fontWeight: '600' },
 });
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
+  screenBlue: { backgroundColor: colors.blue },
   body: { flex: 1 },
   content: { padding: space.xl - 4, gap: space.lg, paddingBottom: space.xl * 2 },
   fill: { flex: 1 },
@@ -186,13 +216,23 @@ const styles = StyleSheet.create({
   },
   buttonSecondary: {
     backgroundColor: colors.card,
-    borderWidth: 1,
-    borderColor: colors.line,
+    borderWidth: 1.5,
+    borderColor: colors.ink,
   },
+  buttonInverse: { backgroundColor: colors.white },
+  buttonOutlineLight: { backgroundColor: 'transparent', borderWidth: 1.5, borderColor: colors.white },
   buttonDisabled: { opacity: 0.4 },
   pressed: { opacity: 0.75 },
-  buttonText: { color: colors.white, fontSize: 17, fontWeight: '700' },
+  buttonText: {
+    fontFamily: fonts.display,
+    color: colors.white,
+    fontSize: 15,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1.5,
+  },
   buttonTextSecondary: { color: colors.ink },
+  buttonTextInverse: { color: colors.blue },
   chipRow: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
   chip: {
     paddingVertical: 9,
@@ -206,13 +246,21 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   chipSelected: { backgroundColor: colors.ink, borderColor: colors.ink, color: colors.white },
-  chipHighlight: { backgroundColor: colors.warm, borderColor: colors.warm, color: colors.white },
+  chipHighlight: { backgroundColor: colors.highlight, borderColor: colors.highlight, color: colors.white },
   stepHeader: { gap: space.sm },
   progress: { flexDirection: 'row', gap: 6 },
   progressBar: { flex: 1, height: 4, borderRadius: 2, backgroundColor: colors.line },
   progressOn: { backgroundColor: colors.accent },
   small: { fontSize: 13, color: colors.muted },
-  title: { fontSize: 30, fontWeight: '800', color: colors.ink, lineHeight: 34 },
+  title: {
+    fontFamily: fonts.display,
+    fontSize: 28,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    color: colors.ink,
+    lineHeight: 33,
+  },
   bodyText: { fontSize: 15, lineHeight: 22, color: colors.body },
   section: {
     backgroundColor: colors.card,
@@ -223,7 +271,14 @@ const styles = StyleSheet.create({
     gap: space.md,
   },
   sectionHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'baseline' },
-  sectionTitle: { fontSize: 16, fontWeight: '700', color: colors.ink },
+  sectionTitle: {
+    fontFamily: fonts.display,
+    fontSize: 14,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1.2,
+    color: colors.ink,
+  },
   sectionRight: { fontSize: 14, fontWeight: '700', color: colors.accent },
   segmented: {
     flexDirection: 'row',
@@ -240,10 +295,11 @@ const styles = StyleSheet.create({
     borderRadius: radius.pill,
     paddingHorizontal: 2,
   },
-  segmentOn: { backgroundColor: colors.card },
+  segmentOn: { backgroundColor: colors.blue },
   segmentText: { fontSize: 14, color: colors.body },
   segmentTextSmall: { fontSize: 11 },
-  segmentTextOn: { fontWeight: '700', color: colors.ink },
+  segmentTextOn: { fontWeight: '700', color: colors.white },
   avatar: { alignItems: 'center', justifyContent: 'center' },
-  avatarText: { color: colors.white, fontWeight: '800' },
+  avatarText: { fontFamily: fonts.display, color: colors.white, fontWeight: '700' },
+  avatarTextInverse: { color: colors.blue },
 });

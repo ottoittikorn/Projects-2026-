@@ -81,7 +81,7 @@ export default function Basics() {
         <>
           {problem ? <Text style={[text.error, styles.center]}>{problem}</Text> : null}
           <Button
-            title={edit ? 'Save' : 'Next: who you want to play with'}
+            title={edit ? 'Save' : 'Next'}
             onPress={next}
             disabled={!!problem}
           />

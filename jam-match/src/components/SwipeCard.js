@@ -4,7 +4,7 @@
 import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { Animated, PanResponder, Platform, StyleSheet, useWindowDimensions } from 'react-native';
 
-import { colors, radius } from '../theme';
+import { colors, fonts, radius } from '../theme';
 
 const SWIPE_THRESHOLD = 110;
 const useNativeDriver = Platform.OS !== 'web';
@@ -69,25 +69,28 @@ const styles = StyleSheet.create({
   stamp: {
     position: 'absolute',
     top: 28,
+    fontFamily: fonts.display,
     fontSize: 34,
-    fontWeight: '900',
+    fontWeight: '700',
+    textTransform: 'uppercase',
     letterSpacing: 1,
     paddingHorizontal: 12,
     paddingVertical: 2,
     borderWidth: 4,
     borderRadius: radius.md,
+    backgroundColor: colors.white,
     overflow: 'hidden',
   },
   jam: {
     left: 24,
-    color: colors.accent,
-    borderColor: colors.accent,
+    color: colors.blue,
+    borderColor: colors.blue,
     transform: [{ rotate: '-14deg' }],
   },
   pass: {
     right: 24,
-    color: colors.warm,
-    borderColor: colors.warm,
+    color: colors.ink,
+    borderColor: colors.ink,
     transform: [{ rotate: '14deg' }],
   },
 });
