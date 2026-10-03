@@ -10,9 +10,9 @@ import {
   Section,
   Segmented,
   StepHeader,
-  Stepper,
   text,
 } from '../../components/ui';
+import { RangeSlider, Slider } from '../../components/Slider';
 import { GENRE_MODES, INSTRUMENTS, LEVELS } from '../../data/options';
 import { useApp } from '../../state/AppContext';
 import { colors, space } from '../../theme';
@@ -43,32 +43,26 @@ export default function Preferences() {
     >
       <StepHeader step={2} total={3} title="Who do you want to play with?" />
 
-      <Section title="Distance">
-        <Stepper
-          label="Up to"
+      <Section>
+        <Slider
+          label="Maximum distance"
           value={prefs.maxDistanceKm}
-          min={5}
+          min={1}
           max={100}
-          step={5}
           format={(v) => `${v} km`}
           onChange={(v) => set({ maxDistanceKm: v })}
         />
       </Section>
 
-      <Section title="Age range" right={`${prefs.ageMin} – ${prefs.ageMax}`}>
-        <Stepper
-          label="From"
-          value={prefs.ageMin}
+      <Section>
+        <RangeSlider
+          label="Age range"
+          low={prefs.ageMin}
+          high={prefs.ageMax}
           min={18}
-          max={prefs.ageMax}
-          onChange={(v) => set({ ageMin: v })}
-        />
-        <Stepper
-          label="To"
-          value={prefs.ageMax}
-          min={prefs.ageMin}
           max={80}
-          onChange={(v) => set({ ageMax: v })}
+          formatRange={(lo, hi) => `${lo} – ${hi === 80 ? '80+' : hi}`}
+          onChange={(lo, hi) => set({ ageMin: lo, ageMax: hi })}
         />
         <View style={styles.switchRow}>
           <View style={styles.switchText}>
@@ -86,22 +80,15 @@ export default function Preferences() {
         </View>
       </Section>
 
-      <Section title="Level range" right={`${LEVELS[prefs.levelMin]} – ${LEVELS[prefs.levelMax]}`}>
-        <Stepper
-          label="From"
-          value={prefs.levelMin}
+      <Section>
+        <RangeSlider
+          label="Level range"
+          low={prefs.levelMin}
+          high={prefs.levelMax}
           min={0}
-          max={prefs.levelMax}
+          max={LEVELS.length - 1}
           format={(v) => LEVELS[v]}
-          onChange={(v) => set({ levelMin: v })}
-        />
-        <Stepper
-          label="To"
-          value={prefs.levelMax}
-          min={prefs.levelMin}
-          max={4}
-          format={(v) => LEVELS[v]}
-          onChange={(v) => set({ levelMax: v })}
+          onChange={(lo, hi) => set({ levelMin: lo, levelMax: hi })}
         />
       </Section>
 

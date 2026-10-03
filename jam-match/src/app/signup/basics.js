@@ -8,23 +8,23 @@ import {
   ChipRow,
   Screen,
   Section,
-  Segmented,
   StepHeader,
   text,
 } from '../../components/ui';
-import { GENRES, INSTRUMENTS, LEVELS_SHORT } from '../../data/options';
+import { Slider } from '../../components/Slider';
+import { GENRES, INSTRUMENTS, LEVELS } from '../../data/options';
 import { ageFromBirthDate } from '../../lib/matching';
 import { useApp } from '../../state/AppContext';
 import { colors, radius, space } from '../../theme';
-
-const levelOptions = LEVELS_SHORT.map((label, i) => ({ id: i, label }));
 
 // Sign-up step 1: who you are and what you play.
 export default function Basics() {
   const { profile, updateProfile } = useApp();
   const { edit } = useLocalSearchParams();
 
-  const [name, setName] = useState(profile.name);
+  const [firstName, setFirstName] = useState(profile.firstName);
+  const [surname, setSurname] = useState(profile.surname);
+  const [displayName, setDisplayName] = useState(profile.displayName);
   const [day, setDay] = useState(profile.birthDate ? String(profile.birthDate.day) : '');
   const [month, setMonth] = useState(profile.birthDate ? String(profile.birthDate.month) : '');
   const [year, setYear] = useState(profile.birthDate ? String(profile.birthDate.year) : '');
@@ -56,7 +56,8 @@ export default function Basics() {
   const age = dateValid ? ageFromBirthDate(birthDate) : null;
 
   let problem = null;
-  if (!name.trim()) problem = 'Add your first name.';
+  if (!firstName.trim()) problem = 'Add your first name.';
+  else if (!surname.trim()) problem = 'Add your surname.';
   else if (!dateValid) problem = 'Add your date of birth.';
   else if (age < 18) problem = 'Sorry, Jam Mate is for people aged 18 and over.';
   else if (!city.trim()) problem = 'Add your city.';
@@ -64,7 +65,12 @@ export default function Basics() {
   else if (genres.length === 0) problem = 'Pick at least one genre.';
 
   const next = () => {
-    updateProfile({ name: name.trim(), birthDate, city: city.trim(), instruments, genres });
+    updateProfile({
+      firstName: firstName.trim(),
+      surname: surname.trim(),
+      // Shown to others. Falls back to the first name if left empty.
+      displayName: displayName.trim() || firstName.trim(),
+      birthDate, city: city.trim(), instruments, genres });
     if (edit) router.back();
     else router.push('/signup/preferences');
   };
@@ -84,8 +90,43 @@ export default function Basics() {
     >
       <StepHeader step={1} total={3} title="Tell us how you play" />
 
-      <Field label="First name">
-        <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Your first name" placeholderTextColor={colors.muted} />
+      <View style={styles.row}>
+        <View style={styles.half}>
+          <Field label="First name">
+            <TextInput
+              style={styles.input}
+              value={firstName}
+              onChangeText={setFirstName}
+              placeholder="First name"
+              placeholderTextColor={colors.muted}
+              textContentType="givenName"
+            />
+          </Field>
+        </View>
+        <View style={styles.half}>
+          <Field label="Surname">
+            <TextInput
+              style={styles.input}
+              value={surname}
+              onChangeText={setSurname}
+              placeholder="Surname"
+              placeholderTextColor={colors.muted}
+              textContentType="familyName"
+            />
+          </Field>
+        </View>
+      </View>
+
+      <Field label="Display name">
+        <TextInput
+          style={styles.input}
+          value={displayName}
+          onChangeText={setDisplayName}
+          placeholder={firstName.trim() || 'The name people see'}
+          placeholderTextColor={colors.muted}
+          textContentType="nickname"
+        />
+        <Text style={text.small}>This is the name other musicians see. Your surname stays private.</Text>
       </Field>
 
       <Field label="Date of birth">
@@ -141,11 +182,12 @@ export default function Basics() {
         </ChipRow>
         {instruments.map((i) => (
           <View key={i.name} style={styles.level}>
-            <Text style={text.label}>Your level on {i.name.toLowerCase()}</Text>
-            <Segmented
-              small
-              options={levelOptions}
+            <Slider
+              label={`Your level on ${i.name.toLowerCase()}`}
               value={i.level}
+              min={0}
+              max={LEVELS.length - 1}
+              format={(v) => LEVELS[v]}
               onChange={(level) => setLevel(i.name, level)}
             />
           </View>
@@ -186,8 +228,9 @@ const styles = StyleSheet.create({
   },
   row: { flexDirection: 'row', gap: space.sm },
   // flexBasis + minWidth let the three boxes shrink to fit side by side.
+  half: { flex: 1, flexBasis: 0, minWidth: 0 },
   short: { flex: 1, flexBasis: 0, minWidth: 0 },
   long: { flex: 1.6, flexBasis: 0, minWidth: 0 },
-  level: { gap: space.xs + 2, paddingTop: space.xs },
+  level: { paddingTop: space.xs },
   center: { textAlign: 'center' },
 });

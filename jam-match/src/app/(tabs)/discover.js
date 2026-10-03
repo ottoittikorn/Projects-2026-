@@ -1,8 +1,9 @@
 import { router } from 'expo-router';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Modal, StyleSheet, Text, View } from 'react-native';
 
 import PersonCard from '../../components/PersonCard';
+import SwipeCard from '../../components/SwipeCard';
 import { Avatar, Button, Screen, Section, Segmented, text } from '../../components/ui';
 import { PEOPLE } from '../../data/people';
 import { rankPeople } from '../../lib/matching';
@@ -14,33 +15,36 @@ const MODES = [
   { id: 'band', label: 'Band' },
 ];
 
-// Swipe-style discovery: one musician at a time, best fit first.
+// Tinder-style discovery: swipe right to jam, left to pass. Best fit first.
 export default function Discover() {
   const { me, decisions, decide, startOver } = useApp();
   const [mode, setMode] = useState('duo');
   const [matchedWith, setMatchedWith] = useState(null);
+  const card = useRef(null);
 
   // Everyone who passes both sides' filters, minus people you've already seen.
   const ranked = useMemo(() => rankPeople(me, PEOPLE), [me]);
   const queue = ranked.filter((p) => !decisions[p.id]);
   const person = queue[0];
+  const nextPerson = queue[1];
 
-  const choose = (choice) => {
-    const isMatch = decide(person.id, choice);
+  const onSwipe = (direction) => {
+    const isMatch = decide(person.id, direction === 'right' ? 'like' : 'pass');
     if (isMatch) setMatchedWith(person);
   };
 
   return (
     <Screen
       edges={['top']}
+      scroll={false}
       footer={
         mode === 'duo' && person ? (
           <View style={styles.actions}>
             <View style={styles.flex}>
-              <Button title="Pass" variant="secondary" onPress={() => choose('pass')} />
+              <Button title="Pass" variant="secondary" onPress={() => card.current?.swipe('left')} />
             </View>
             <View style={styles.flex2}>
-              <Button title="Let’s jam" onPress={() => choose('like')} />
+              <Button title="Let’s jam" onPress={() => card.current?.swipe('right')} />
             </View>
           </View>
         ) : null
@@ -58,9 +62,19 @@ export default function Discover() {
       ) : person ? (
         <>
           <Text style={text.small}>
-            {queue.length} musician{queue.length === 1 ? '' : 's'} fit your preferences
+            {queue.length} musician{queue.length === 1 ? '' : 's'} fit your preferences · swipe
+            right to jam, left to pass
           </Text>
-          <PersonCard person={person} me={me} />
+          <View style={styles.deck}>
+            {nextPerson ? (
+              <View style={styles.behind} pointerEvents="none">
+                <PersonCard person={nextPerson} me={me} />
+              </View>
+            ) : null}
+            <SwipeCard key={person.id} ref={card} onSwipe={onSwipe}>
+              <PersonCard person={person} me={me} />
+            </SwipeCard>
+          </View>
         </>
       ) : (
         <Section title="You’ve seen everyone nearby">
@@ -107,6 +121,8 @@ export default function Discover() {
 
 const styles = StyleSheet.create({
   actions: { flexDirection: 'row', gap: space.md },
+  deck: { flex: 1 },
+  behind: { ...StyleSheet.absoluteFillObject, transform: [{ scale: 0.95 }], opacity: 0.6 },
   flex: { flex: 1 },
   flex2: { flex: 2 },
   overlay: {

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { LEVELS } from '../data/options';
 import { sharedArtists } from '../lib/matching';
@@ -20,7 +20,7 @@ export default function PersonCard({ person, me }) {
         </View>
       </View>
 
-      <View style={styles.info}>
+      <ScrollView style={styles.scroll} contentContainerStyle={styles.info}>
         <View style={styles.nameRow}>
           <Text style={styles.name}>
             {person.name}, {person.age}
@@ -60,13 +60,14 @@ export default function PersonCard({ person, me }) {
             ))}
           </ChipRow>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
+    flex: 1,
     backgroundColor: colors.card,
     borderRadius: radius.lg + 6,
     borderWidth: 1,
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   photo: {
-    height: 170,
+    height: 160,
     backgroundColor: colors.ink,
     alignItems: 'center',
     justifyContent: 'center',
@@ -100,6 +101,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.pill,
     overflow: 'hidden',
   },
+  scroll: { flex: 1 },
   info: { padding: space.lg, gap: space.md },
   nameRow: { gap: 2 },
   name: { fontSize: 26, fontWeight: '800', color: colors.ink },

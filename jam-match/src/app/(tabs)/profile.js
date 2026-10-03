@@ -15,13 +15,16 @@ export default function Profile() {
   return (
     <Screen edges={['top']}>
       <View style={styles.header}>
-        <Avatar name={profile.name || '?'} size={72} />
+        <Avatar name={me.name || '?'} size={72} />
         <View style={styles.flex}>
           <Text style={text.title}>
-            {profile.name}
+            {me.name}
             {me.age ? `, ${me.age}` : ''}
           </Text>
           <Text style={text.small}>{profile.city}</Text>
+          <Text style={text.small}>
+            Full name (only you see this): {profile.firstName} {profile.surname}
+          </Text>
         </View>
       </View>
 

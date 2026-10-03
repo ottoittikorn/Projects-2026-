@@ -132,35 +132,6 @@ export function Segmented({ options, value, onChange, small = false }) {
   );
 }
 
-// − value + control, used for distance, ages and levels.
-export function Stepper({ label, value, onChange, min, max, step = 1, format = (v) => String(v) }) {
-  const change = (delta) => onChange(Math.min(max, Math.max(min, value + delta)));
-  return (
-    <View style={styles.stepper}>
-      <Text style={styles.stepperLabel}>{label}</Text>
-      <View style={styles.stepperControls}>
-        <RoundButton label="−" onPress={() => change(-step)} disabled={value <= min} a11y={`Less ${label}`} />
-        <Text style={styles.stepperValue}>{format(value)}</Text>
-        <RoundButton label="+" onPress={() => change(step)} disabled={value >= max} a11y={`More ${label}`} />
-      </View>
-    </View>
-  );
-}
-
-function RoundButton({ label, onPress, disabled, a11y }) {
-  return (
-    <Pressable
-      onPress={onPress}
-      disabled={disabled}
-      accessibilityRole="button"
-      accessibilityLabel={a11y}
-      style={({ pressed }) => [styles.round, disabled && styles.buttonDisabled, pressed && styles.pressed]}
-    >
-      <Text style={styles.roundText}>{label}</Text>
-    </Pressable>
-  );
-}
-
 // A coloured circle with someone's first letter, standing in for a photo.
 const avatarColors = ['#0f6e66', '#b4400b', '#5b4b8a', '#2f5d8a', '#8a5a2f', '#3f6b3a'];
 
@@ -207,7 +178,7 @@ const styles = StyleSheet.create({
   },
   button: {
     minHeight: 52,
-    borderRadius: radius.md + 2,
+    borderRadius: radius.pill,
     backgroundColor: colors.accent,
     alignItems: 'center',
     justifyContent: 'center',
@@ -259,41 +230,20 @@ const styles = StyleSheet.create({
     gap: space.xs,
     padding: space.xs,
     backgroundColor: colors.soft,
-    borderRadius: radius.md,
+    borderRadius: radius.pill,
   },
   segment: {
     flex: 1,
     minHeight: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: radius.sm,
+    borderRadius: radius.pill,
     paddingHorizontal: 2,
   },
   segmentOn: { backgroundColor: colors.card },
   segmentText: { fontSize: 14, color: colors.body },
   segmentTextSmall: { fontSize: 11 },
   segmentTextOn: { fontWeight: '700', color: colors.ink },
-  stepper: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  stepperLabel: { fontSize: 15, color: colors.body },
-  stepperControls: { flexDirection: 'row', alignItems: 'center', gap: space.md },
-  stepperValue: {
-    minWidth: 92,
-    textAlign: 'center',
-    fontSize: 16,
-    fontWeight: '700',
-    color: colors.accent,
-  },
-  round: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    borderWidth: 1,
-    borderColor: colors.line,
-    backgroundColor: colors.background,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  roundText: { fontSize: 22, color: colors.ink, lineHeight: 24 },
   avatar: { alignItems: 'center', justifyContent: 'center' },
   avatarText: { color: colors.white, fontWeight: '800' },
 });

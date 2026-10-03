@@ -60,9 +60,10 @@ npx expo start
 A clickable version of every v1 screen, with made-up musicians:
 
 - **Welcome** → **Get started** runs the 3-step sign-up, or **Try the demo profile** skips it.
-- **Sign up:** name, date of birth (18+ only), city, instruments with a level each, genres →
-  who you want to play with → top 5 artists ("Connect Apple Music" fills in demo data).
-- **Discover:** one musician at a time, filtered both ways by distance, age, level and genre.
+- **Sign up:** first name, surname (private), display name, date of birth (18+ only), city,
+  instruments with a level slider each, genres →
+  who you want to play with (Tinder-style sliders) → top 5 artists ("Connect Apple Music" fills in demo data).
+- **Discover:** swipe right to jam, left to pass (or use the buttons). One musician at a time, filtered both ways by distance, age, level and genre.
   Shared genres and artists are highlighted. Maya, Leo, Kenji and Tom have already liked you,
   so "Let's jam" on them makes a match.
 - **Matches & chat:** three icebreaker openers, and a pretend reply.
@@ -78,7 +79,7 @@ Nothing is saved yet: closing the app resets it. Saving comes in phase 3.
 | `src/app/signup/` | The 3 sign-up steps. |
 | `src/app/(tabs)/` | Discover, Matches and Profile tabs. |
 | `src/app/chat/[id].js` | A chat with one match. |
-| `src/components/` | Reusable pieces: buttons, chips, cards. |
+| `src/components/` | Reusable pieces: buttons, chips, sliders, the swipe card. |
 | `src/data/` | Made-up musicians and the lists of instruments and genres. |
 | `src/lib/matching.js` | The matching rules. |
 | `src/state/AppContext.js` | What the app remembers while it's open. |

@@ -9,7 +9,9 @@ import { ageFromBirthDate } from '../lib/matching';
 // It resets when the app restarts; phase 3 saves it to a real database.
 
 const emptyProfile = {
-  name: '',
+  firstName: '',
+  surname: '', // private: never shown to other people
+  displayName: '', // the name other musicians see
   birthDate: null, // { day, month, year }
   city: '',
   instruments: [], // [{ name: 'Guitar', level: 3 }]
@@ -28,7 +30,9 @@ const emptyProfile = {
 };
 
 const demoProfile = {
-  name: 'Otto',
+  firstName: 'Otto',
+  surname: 'Sample',
+  displayName: 'Otto',
   birthDate: { day: 14, month: 5, year: 1997 },
   city: 'Your city',
   instruments: [
@@ -53,6 +57,7 @@ export function AppProvider({ children }) {
   const me = useMemo(
     () => ({
       ...profile,
+      name: profile.displayName || profile.firstName,
       age: profile.birthDate ? ageFromBirthDate(profile.birthDate) : 0,
     }),
     [profile],
