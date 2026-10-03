@@ -1,4 +1,4 @@
-# Jam Match
+# Jam Mate
 
 An app that helps musicians find people nearby to jam with or form a band,
 matched by instrument, level, genre, favourite artists and distance.
@@ -45,16 +45,42 @@ stop it with `Ctrl + C` and run `npx expo start --tunnel` instead.
 If Expo Go says the project is **incompatible** with its version, Expo Go has moved
 to a newer SDK. Run `npx expo install expo@latest --fix` and try again.
 
-### 4. Make your first change
+### 4. Getting updates
 
-Open `App.js`, change the text `Jam Match` to something else and save.
-The app on your phone updates within a second or two.
+When new code is pushed to GitHub, run this inside `jam-match`:
+
+```bash
+git pull
+npm install
+npx expo start
+```
+
+## The prototype (phase 2)
+
+A clickable version of every v1 screen, with made-up musicians:
+
+- **Welcome** → **Get started** runs the 3-step sign-up, or **Try the demo profile** skips it.
+- **Sign up:** name, date of birth (18+ only), city, instruments with a level each, genres →
+  who you want to play with → top 5 artists ("Connect Apple Music" fills in demo data).
+- **Discover:** one musician at a time, filtered both ways by distance, age, level and genre.
+  Shared genres and artists are highlighted. Maya, Leo, Kenji and Tom have already liked you,
+  so "Let's jam" on them makes a match.
+- **Matches & chat:** three icebreaker openers, and a pretend reply.
+- **Profile:** your details, with buttons to edit each sign-up step.
+
+Nothing is saved yet: closing the app resets it. Saving comes in phase 3.
 
 ## Project layout
 
-| File | What it is |
+| Path | What it is |
 |---|---|
-| `App.js` | The app's code. Right now: the welcome screen. |
-| `app.json` | App settings: name, icon, colours. |
-| `assets/` | Icons and splash image. |
-| `package.json` | The list of libraries the app uses. |
+| `src/app/` | The screens. Every file here is a screen (Expo Router). |
+| `src/app/signup/` | The 3 sign-up steps. |
+| `src/app/(tabs)/` | Discover, Matches and Profile tabs. |
+| `src/app/chat/[id].js` | A chat with one match. |
+| `src/components/` | Reusable pieces: buttons, chips, cards. |
+| `src/data/` | Made-up musicians and the lists of instruments and genres. |
+| `src/lib/matching.js` | The matching rules. |
+| `src/state/AppContext.js` | What the app remembers while it's open. |
+| `src/theme.js` | App name, colours and spacing in one place. |
+| `app.json` | App settings: name, icon. |

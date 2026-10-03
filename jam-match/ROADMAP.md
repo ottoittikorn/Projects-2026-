@@ -1,12 +1,12 @@
-# Jam Match roadmap: from first screen to friends testing it
+# Jam Mate roadmap: from first screen to friends testing it
 
 About 10 hours a week. Each phase ends with something you can see on your phone.
 
 | Phase | What you build | Time | Done when… |
 |---|---|---|---|
 | ✅ 0. Setup | Mac, Expo, app running on iPhone | done | You see the welcome screen |
-| 1. Basics | Learn components, state and styles by editing the welcome screen | 1 week | You can add a button that changes something on screen |
-| 2. Clickable app with fake data | Navigation and every v1 screen: sign-up steps, profile, preferences, swipe cards, match, chat. Data is made up and lives in the app. | 2–3 weeks | You can tap through the whole app like the design canvas |
+| ✅ 1. Basics | Learn components, state and styles by editing the welcome screen | 1 week | You can add a button that changes something on screen |
+| ✅ 2. Clickable app with fake data | Navigation and every v1 screen: sign-up steps, profile, preferences, swipe cards, match, chat. Data is made up and lives in the app. | 2–3 weeks | You can tap through the whole app like the design canvas |
 | 3. Real accounts & profiles | Supabase (free backend): login, date of birth with 18+ check, save profile, upload a photo | 2–3 weeks | You sign up on your phone, close the app, and your profile is still there |
 | 4. Matching | Filter by distance, age, level and genre both ways; "Let's jam" likes; mutual like = match | 2 weeks | Two test accounts match each other |
 | 5. Chat | Real-time messages, the 3 icebreaker openers, notifications for new matches and messages | 2 weeks | Two phones can chat |

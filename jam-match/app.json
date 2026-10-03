@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Jam Match",
+    "name": "Jam Mate",
     "slug": "jam-match",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,7 +18,12 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/favicon.png",
+      "output": "single"
+    },
+    "scheme": "jammate",
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
