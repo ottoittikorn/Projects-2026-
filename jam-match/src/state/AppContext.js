@@ -12,6 +12,8 @@ const emptyProfile = {
   firstName: '',
   surname: '', // private: never shown to other people
   displayName: '', // the name other musicians see
+  photos: [], // up to 5 image addresses; the first is the main photo
+  occupation: '', // optional; hidden when empty
   birthDate: null, // { day, month, year }
   city: '',
   instruments: [], // [{ name: 'Guitar', level: 3 }]
@@ -33,6 +35,8 @@ const demoProfile = {
   firstName: 'Otto',
   surname: 'Sample',
   displayName: 'Otto',
+  photos: [],
+  occupation: '',
   birthDate: { day: 14, month: 5, year: 1997 },
   city: 'Your city',
   instruments: [

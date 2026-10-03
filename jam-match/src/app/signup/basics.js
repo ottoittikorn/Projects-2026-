@@ -11,6 +11,7 @@ import {
   StepHeader,
   text,
 } from '../../components/ui';
+import PhotoPicker, { MAX_PHOTOS } from '../../components/PhotoPicker';
 import { Slider } from '../../components/Slider';
 import { GENRES, INSTRUMENTS, LEVELS } from '../../data/options';
 import { ageFromBirthDate } from '../../lib/matching';
@@ -29,6 +30,8 @@ export default function Basics() {
   const [month, setMonth] = useState(profile.birthDate ? String(profile.birthDate.month) : '');
   const [year, setYear] = useState(profile.birthDate ? String(profile.birthDate.year) : '');
   const [city, setCity] = useState(profile.city);
+  const [occupation, setOccupation] = useState(profile.occupation);
+  const [photos, setPhotos] = useState(profile.photos);
   const [instruments, setInstruments] = useState(profile.instruments);
   const [genres, setGenres] = useState(profile.genres);
 
@@ -70,7 +73,13 @@ export default function Basics() {
       surname: surname.trim(),
       // Shown to others. Falls back to the first name if left empty.
       displayName: displayName.trim() || firstName.trim(),
-      birthDate, city: city.trim(), instruments, genres });
+      birthDate,
+      city: city.trim(),
+      occupation: occupation.trim(),
+      photos,
+      instruments,
+      genres,
+    });
     if (edit) router.back();
     else router.push('/signup/preferences');
   };
@@ -89,6 +98,11 @@ export default function Basics() {
       }
     >
       <StepHeader step={1} total={3} title="Tell us how you play" />
+
+      <Section title="Photos" right={`${photos.length}/${MAX_PHOTOS}`}>
+        <PhotoPicker photos={photos} onChange={setPhotos} />
+        <Text style={text.small}>Tap a photo to make it your main one.</Text>
+      </Section>
 
       <View style={styles.row}>
         <View style={styles.half}>
@@ -167,6 +181,18 @@ export default function Basics() {
 
       <Field label="City">
         <TextInput style={styles.input} value={city} onChangeText={setCity} placeholder="Your city" placeholderTextColor={colors.muted} />
+      </Field>
+
+      <Field label="Occupation (optional)">
+        <TextInput
+          style={styles.input}
+          value={occupation}
+          onChangeText={setOccupation}
+          placeholder="e.g. Teacher, Student, Designer"
+          placeholderTextColor={colors.muted}
+          textContentType="jobTitle"
+        />
+        <Text style={text.small}>Leave it empty and it won’t show on your profile.</Text>
       </Field>
 
       <Section title="Instruments" right={instruments.length ? `${instruments.length} picked` : null}>

@@ -1,4 +1,5 @@
 // Made-up musicians for the prototype. In phase 3 these come from the database.
+// They have no photos yet, so their cards show a letter instead.
 //
 // Each person also has their own preferences (`prefs`), because a match
 // only shows up when BOTH people fit each other's filters.
@@ -8,6 +9,8 @@
 export const PEOPLE = [
   {
     id: 'maya',
+    occupation: 'Nurse',
+    photos: [],
     name: 'Maya',
     age: 29,
     distanceKm: 4,
@@ -25,6 +28,8 @@ export const PEOPLE = [
   },
   {
     id: 'leo',
+    occupation: '',
+    photos: [],
     name: 'Leo',
     age: 34,
     distanceKm: 7,
@@ -39,6 +44,8 @@ export const PEOPLE = [
   },
   {
     id: 'sofia',
+    occupation: 'Barista',
+    photos: [],
     name: 'Sofia',
     age: 26,
     distanceKm: 3,
@@ -56,6 +63,8 @@ export const PEOPLE = [
   },
   {
     id: 'kenji',
+    occupation: 'Architect',
+    photos: [],
     name: 'Kenji',
     age: 41,
     distanceKm: 9,
@@ -74,6 +83,8 @@ export const PEOPLE = [
   },
   {
     id: 'amara',
+    occupation: 'Student',
+    photos: [],
     name: 'Amara',
     age: 24,
     distanceKm: 12,
@@ -88,6 +99,8 @@ export const PEOPLE = [
   },
   {
     id: 'tom',
+    occupation: '',
+    photos: [],
     name: 'Tom',
     age: 31,
     distanceKm: 6,
@@ -102,6 +115,8 @@ export const PEOPLE = [
   },
   {
     id: 'priya',
+    occupation: 'Doctor',
+    photos: [],
     name: 'Priya',
     age: 28,
     distanceKm: 5,
@@ -116,6 +131,8 @@ export const PEOPLE = [
   },
   {
     id: 'dan',
+    occupation: 'Electrician',
+    photos: [],
     name: 'Dan',
     age: 37,
     distanceKm: 40,
@@ -130,6 +147,8 @@ export const PEOPLE = [
   },
   {
     id: 'lucy',
+    occupation: '',
+    photos: [],
     name: 'Lucy',
     age: 30,
     distanceKm: 2,

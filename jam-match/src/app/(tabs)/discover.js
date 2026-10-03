@@ -98,7 +98,7 @@ export default function Discover() {
             <View style={styles.matchBox}>
               <Text style={[text.kicker, styles.matchKicker]}>It’s a match</Text>
               <View style={styles.avatars}>
-                <Avatar name={me.name || 'You'} size={72} inverse />
+                <Avatar name={me.name || 'You'} size={72} inverse uri={me.photos[0]} />
                 <Avatar name={matchedWith.name} size={72} inverse />
               </View>
               <Text style={styles.matchTitle}>You and {matchedWith.name} both want to jam</Text>

@@ -23,7 +23,15 @@
     },
     "scheme": "jammate",
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Jam Mate uses your photos so you can add them to your musician profile.",
+          "cameraPermission": false,
+          "microphonePermission": false
+        }
+      ]
     ]
   }
 }

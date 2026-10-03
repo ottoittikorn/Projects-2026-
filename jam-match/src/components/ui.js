@@ -1,6 +1,6 @@
 // Small building blocks reused on every screen.
 
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { colors, fonts, radius, space } from '../theme';
@@ -152,7 +152,17 @@ export function Segmented({ options, value, onChange, small = false }) {
 const avatarColors = [colors.blue, colors.ink, '#1f4fb5', '#3a3f4b', colors.blueDark];
 
 // `inverse` = white circle with a blue letter, for use on blue backgrounds.
-export function Avatar({ name, size = 48, inverse = false }) {
+// Pass `uri` to show a photo instead of the letter.
+export function Avatar({ name, size = 48, inverse = false, uri }) {
+  if (uri) {
+    return (
+      <Image
+        source={{ uri }}
+        style={{ width: size, height: size, borderRadius: size / 2 }}
+        accessibilityLabel={name}
+      />
+    );
+  }
   const color = inverse
     ? colors.white
     : avatarColors[(name.charCodeAt(0) || 0) % avatarColors.length];

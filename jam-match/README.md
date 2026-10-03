@@ -60,14 +60,15 @@ npx expo start
 A clickable version of every v1 screen, with made-up musicians:
 
 - **Welcome** → **Get started** runs the 3-step sign-up, or **Try the demo profile** skips it.
-- **Sign up:** first name, surname (private), display name, date of birth (18+ only), city,
+- **Sign up:** up to 5 photos, first name, surname (private), display name, date of birth (18+ only), city,
+  optional occupation,
   instruments with a level slider each, genres →
   who you want to play with (Tinder-style sliders) → top 5 artists ("Connect Apple Music" fills in demo data).
 - **Discover:** swipe right to jam, left to pass (or use the buttons). One musician at a time, filtered both ways by distance, age, level and genre.
   Shared genres and artists are highlighted. Maya, Leo, Kenji and Tom have already liked you,
   so "Let's jam" on them makes a match.
 - **Matches & chat:** three icebreaker openers, and a pretend reply.
-- **Profile:** your details, with buttons to edit each sign-up step.
+- **Profile:** your photos and details, "Preview my card", and buttons to edit each sign-up step.
 
 Nothing is saved yet: closing the app resets it. Saving comes in phase 3.
 
