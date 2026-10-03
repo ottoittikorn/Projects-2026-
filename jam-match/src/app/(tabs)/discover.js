@@ -41,7 +41,7 @@ export default function Discover() {
         mode === 'duo' && person ? (
           <View style={styles.actions}>
             <View style={styles.flex}>
-              <Button title="Pass" variant="secondary" onPress={() => card.current?.swipe('left')} />
+              <Button title="Nah" variant="secondary" onPress={() => card.current?.swipe('left')} />
             </View>
             <View style={styles.flex2}>
               <Button title="Let’s jam" onPress={() => card.current?.swipe('right')} />
